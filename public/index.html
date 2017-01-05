@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<title>Notas App</title>
+<meta name="theme-color" content="#ef6c00"/>
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<script src="dist/js/villa.min.js"></script>
+<link rel="stylesheet" href="dist/css/villa.min.css"/>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="dist/css/material-colors.css"/>
+<link rel="stylesheet" type="text/css" href="dist/css/villa-cross.min.css"/>
+<script src="dist/js/html5shiv.js"></script>
+<script src="dist/js/html5shiv-printshiv.js"></script>
+<script src="dist/js/classList.min.js"></script>
+<![endif]-->
+
+<style>
+
+	body {
+		-webkit-align-items: center;
+		align-items: center;
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-flow: column;
+		flex-flow: column;
+		padding: 1em;
+	}
+
+	input {
+		border: solid 2px #bdbdbd;
+		width: 100%;
+		max-width: 24em;
+		padding: 1em;
+		margin-bottom: 1em;
+		-webkit-transition: all .4s;
+		-moz-transition: all .4s;
+		-ms-transition: all .4s;
+		-o-transition: all .4s;
+		transition: all .4s;
+	}
+
+	input:active,
+	input:focus {
+		border-color: #2196f3;
+	}
+
+	button {
+		background-color: #2196f3;
+		cursor: pointer;
+		border: none;
+		color: #ffffff;
+		height: 3em;
+		width: 100%;
+		max-width: 24em;
+		-webkit-transition: all .3s ease-in-out;
+		-moz-transition: all .3s ease-in-out;
+		-ms-transition: all .3s ease-in-out;
+		-o-transition: all .3s ease-in-out;
+		transition: all .3s ease-in-out;
+		text-transform: uppercase;
+		font-weight: 900;
+			margin-bottom: 1em;
+	}
+
+	button:hover,
+	button:focus {
+		background-color: #1a237e;
+	}
+
+	button:active {
+		background-color: #1976d2;
+	}
+
+	.nota {
+		background-color: #bdbdbd;
+		width: 100%;
+		max-width: 24em;
+		height: 3em;
+		text-align: center;
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-align-items: center;
+		align-items: center;
+		-webkit-justify-content: center;
+		justify-content: center;
+	}
+
+	.nota span {
+		font-weight: 900;
+	}
+	
+</style>
+
+<body>
+
+<input id="provaTeoricaTextField" type="text" placeholder="Prova Teórica"/>
+<input id="provaPraticaTextField" type="text" placeholder="Prova Prática"/>
+<input id="tutsTextField" type="text" placeholder="Tuts"/>
+
+<button id="calculeButton">Calcular</button>
+
+<div class="nota">
+
+	<span id="notaElement"></span>
+
+</div>
+
+<script>
+
+	var filterFloat = function (value) {
+		if(/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/
+						.test(value))
+			return Number(value);
+		return 0;
+	}
+
+</script>
+
+<script>
+
+	var provaTeoricaTextFieldElement = document.getElementById('provaTeoricaTextField');
+	var provaPraticaTextFieldElement = document.getElementById('provaPraticaTextField');
+	var tutsTextFieldElement = document.getElementById('tutsTextField');
+	var notaElement = document.getElementById('notaElement');
+
+	function arredondaProPeso(nota, peso) {
+
+		return nota * peso;
+
+	}
+
+	var getProva = function () {
+
+		var provaTeorica = arredondaProPeso(filterFloat(provaTeoricaTextFieldElement.value), .8);
+		var provaPratica = arredondaProPeso(filterFloat(provaPraticaTextFieldElement.value), .2);
+
+		return provaTeorica + provaPratica;
+
+	};
+
+	var getTuts = function () {
+
+		return filterFloat(tutsTextFieldElement.value);
+
+	};
+
+	var getNotaFinal = function() {
+
+		var prova = arredondaProPeso(getProva(),.7);
+		var tuts = arredondaProPeso(getTuts(),.3);
+
+		var notaFinal = prova + tuts;
+
+		if (notaFinal > 10)
+			return 10;
+
+		return notaFinal;
+
+	};
+
+	var notaFinal = getNotaFinal();
+
+	console.log(notaFinal);
+
+	//listeners
+
+	var calculeButtonElement = document.getElementById('calculeButton');
+	calculeButtonElement.addEventListener('click', function () {
+
+		notaElement.innerText = getNotaFinal();
+
+	})
+
+</script>
+
+</body>
+
+</html>
