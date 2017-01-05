@@ -1,13 +1,6 @@
 {
-  "short_name": "Espaço Ativa App",
-  "name": "Aplicativo do Espaço Ativa",
-  "icons": [
-    {
-      "src": "dist/img/AtivaLaucherIcon-01.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
+  "short_name": "Nota App",
+  "name": "Nota App",
   "start_url": "/index.html",
   "display": "standalone",
   "orientation": "portrait"
